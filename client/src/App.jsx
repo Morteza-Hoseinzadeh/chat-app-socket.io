@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 // Simulate socket behavior with custom event system
@@ -34,9 +34,7 @@ const createSocketSimulator = () => {
 const socket = createSocketSimulator();
 
 export default function App() {
-  const [room, setRoom] = useState('');
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([]);
   const [conversations, setConversations] = useState([
     {
       id: 1,
@@ -89,16 +87,9 @@ export default function App() {
   ]);
   const [activeConversation, setActiveConversation] = useState(1);
 
-  const joinRoom = () => {
-    if (room.trim() !== '') {
-      socket.emit('join_room', room);
-    }
-  };
-
   const handleSendMsg = () => {
     if (input.trim() !== '') {
       const messageData = {
-        room,
         message: input,
         sender: socket.id,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
